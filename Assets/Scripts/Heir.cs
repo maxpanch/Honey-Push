@@ -16,6 +16,7 @@ public class Heir : MonoBehaviour
     public BoxCollider BoxCollider;
     public GameObject Sword;
     public bool IsAttacking = false;
+    public Sprite HeirEnemy;
     private void Update()
     {
         if (!IsDead && !IsAttacking)
@@ -59,7 +60,7 @@ public class Heir : MonoBehaviour
         {
             IsGrown = true;
             // GameManager.Instance.Enemies.Add(gameObject);
-            SpriteRenderer.color = Color.red;
+            SpriteRenderer.sprite = HeirEnemy;
         }
         else
         {
