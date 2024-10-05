@@ -12,6 +12,7 @@ public class Queen : MonoBehaviour
     private float PowerBase;
     public float ShootCooldown = 0.5f;
     private float ShootCooldownBase;
+    public Animator Animator;
     private void Start()
     {
         PowerBase = Power;
@@ -32,8 +33,10 @@ public class Queen : MonoBehaviour
             if (Input.GetMouseButton(0)) Power += Time.deltaTime / 4;
             if (Input.GetMouseButtonUp(0))
             {
+                Animator.SetTrigger("Shoot");
                 GameObject bullet = Instantiate(Heir, SpawnPoint.position, quaternion.identity);
                 bullet.GetComponent<Heir>().Destination = Aim.transform.position;
+                bullet.transform.parent = GameManager.Instance.SortingGroup;
                 // Debug.Log(Aim.transform.position);
                 bullet.GetComponent<Heir>().Rigidbody.AddForce(bullet.GetComponent<Heir>().Destination * Power, ForceMode.Impulse);
                 Power = PowerBase;

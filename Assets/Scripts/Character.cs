@@ -10,11 +10,14 @@ public class Character : MonoBehaviour
     public float VerticalMovement;
     public Rigidbody Rigidbody;
     public float Health = 10;
+    public Animator Animator;
     void Update()
     {
         if (GameManager.Instance.GameState == State.Intro || GameManager.Instance.GameState == State.Tutorial || GameManager.Instance.GameState == State.Lose || GameManager.Instance.GameState == State.Win) return;
         HorizontalMovement = Input.GetAxisRaw("Horizontal");
         VerticalMovement = Input.GetAxisRaw("Vertical");
+        if (HorizontalMovement != 0 || VerticalMovement != 0) Animator.SetBool("IsWalking", true);
+        else Animator.SetBool("IsWalking", false);
     }
     private void FixedUpdate()
     {

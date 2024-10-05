@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     public int WaveEnemiesCount = 5;
     public float WaveTimeBetweenEnemies = 0.5f;
     public float WavePauseBetweenWaves = 5f;
+    public Transform[] VikingSpawnPoints;
+    public Transform SortingGroup;
     private void Awake()
     {
         if (Instance != null) Destroy(this);
@@ -43,8 +45,9 @@ public class GameManager : MonoBehaviour
     {
         while (IsSpawning)
         {
-            GameObject viking = Instantiate(Viking, new Vector3(Random.Range(-7, 7), Random.Range(-4, 4), 0), Quaternion.identity);
+            GameObject viking = Instantiate(Viking, VikingSpawnPoints[Random.Range(0, VikingSpawnPoints.Length)].transform.position + new Vector3(0, Random.Range(-2, 2), 0), Quaternion.identity);
             viking.GetComponent<Viking>().Destination = King;
+            viking.transform.parent = SortingGroup;
             WaveEnemiesCount -= 1;
             // Enemies.Add(viking);
             if (WaveEnemiesCount <= 0)
@@ -59,7 +62,6 @@ public class GameManager : MonoBehaviour
 
     public void SetState(State state)
     {
-        Debug.Log(state);
         GameState = state;
         if (GameState == State.Intro)
         {
