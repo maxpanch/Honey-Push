@@ -204,6 +204,8 @@ public class GameManager : MonoBehaviour
         IntroUI.text = "";
         Bubble.SetActive(false);
         Title.SetActive(false);
+        TutorialUI.SetActive(true);
+        TutorialButtonUI.SetActive(true);
         SetState(State.Tutorial);
     }
     private IEnumerator FadeRoutine(float value)
@@ -219,6 +221,7 @@ public class GameManager : MonoBehaviour
     }
     public void ShowTutorial()
     {
+        StartCoroutine(FadeRoutine(1f));
         TutorialUI.SetActive(true);
         TutorialButtonUI.SetActive(true);
     }

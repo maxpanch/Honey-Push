@@ -96,7 +96,7 @@ public class Heir : MonoBehaviour
     private IEnumerator IncreaseScaleRoutine()
     {
         float timeForScale = 0.3f;
-        Vector3 scaleChange = new Vector3(0.0005f, 0.0005f, 0);
+        Vector3 scaleChange = new Vector3(0.003f, 0.003f, 0);
         while (timeForScale > 0)
         {
             transform.localScale += scaleChange;

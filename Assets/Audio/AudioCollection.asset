@@ -18,28 +18,28 @@ MonoBehaviour:
     - Name: GamejamSoulsHoneyPushGame
       Clips:
       - AudioClip: {fileID: 8300000, guid: 1412d1a47f74cf342a95ef37c7f0e06c, type: 3}
-        Volume: 0.55
+        Volume: 0.45
       HasPitchVariation: 0
       PitchVariation: 0
       Enum: 0
     - Name: GamejamSoulsHoneyPushLose
       Clips:
       - AudioClip: {fileID: 8300000, guid: 3e09ab72f83e1ce44a158c6032fec98c, type: 3}
-        Volume: 0.5
+        Volume: 0.4
       HasPitchVariation: 0
       PitchVariation: 0
       Enum: 1
     - Name: GamejamSoulsHoneyPushMenu
       Clips:
       - AudioClip: {fileID: 8300000, guid: ac3351deb7d21324aae87a591bb8fc3b, type: 3}
-        Volume: 0.5
+        Volume: 0.4
       HasPitchVariation: 0
       PitchVariation: 0
       Enum: 2
     - Name: GamejamSoulsHoneyPushWin
       Clips:
       - AudioClip: {fileID: 8300000, guid: efe6db2db90d5b740add6d7b979754e2, type: 3}
-        Volume: 0.6
+        Volume: 0.5
       HasPitchVariation: 0
       PitchVariation: 0
       Enum: 3
@@ -119,21 +119,21 @@ MonoBehaviour:
     - Name: hp_footstep
       Clips:
       - AudioClip: {fileID: 8300000, guid: 85ef6c427988a554ba3fbae839094e26, type: 3}
-        Volume: 0.15
+        Volume: 0.2
       - AudioClip: {fileID: 8300000, guid: b4cd2242ad302ad4891199143e3b8990, type: 3}
-        Volume: 0.1
-      - AudioClip: {fileID: 8300000, guid: b2fbc4a434135eb488fe1da9a48f7a5d, type: 3}
         Volume: 0.15
+      - AudioClip: {fileID: 8300000, guid: b2fbc4a434135eb488fe1da9a48f7a5d, type: 3}
+        Volume: 0.2
       - AudioClip: {fileID: 8300000, guid: 3ef9524005f48a3468579ea4283a5d9e, type: 3}
-        Volume: 0.1
+        Volume: 0.15
       - AudioClip: {fileID: 8300000, guid: aea1ea9906de6e040aaa6e0ce28b1bb2, type: 3}
         Volume: 0.15
       - AudioClip: {fileID: 8300000, guid: 321f0908199ca9f4f8d240dc8e9dc457, type: 3}
         Volume: 0.1
       - AudioClip: {fileID: 8300000, guid: 7ff11fbaf0a5bdb4eb04078f0795f4b3, type: 3}
-        Volume: 0.1
-      - AudioClip: {fileID: 8300000, guid: 860246500922eae47ae04fa87375fbdb, type: 3}
         Volume: 0.15
+      - AudioClip: {fileID: 8300000, guid: 860246500922eae47ae04fa87375fbdb, type: 3}
+        Volume: 0.2
       - AudioClip: {fileID: 8300000, guid: 1fd77c3b6547e054682743ebb5f2d615, type: 3}
         Volume: 0.1
       - AudioClip: {fileID: 8300000, guid: 67f0f4b346c59a44cb1a4cd548a156b6, type: 3}
@@ -144,15 +144,15 @@ MonoBehaviour:
     - Name: hp_sword
       Clips:
       - AudioClip: {fileID: 8300000, guid: 6142b98dae4b13d40ba5d64b5e457924, type: 3}
-        Volume: 0.4
+        Volume: 0.5
       - AudioClip: {fileID: 8300000, guid: 30c50f2370faf9b45aae8c74429609a0, type: 3}
         Volume: 0.4
       - AudioClip: {fileID: 8300000, guid: 766ad232f00b4aa4a8cf9c9b907e2902, type: 3}
         Volume: 0.4
       - AudioClip: {fileID: 8300000, guid: 305855d5b0506404a949afab5ef8abe5, type: 3}
-        Volume: 0.4
+        Volume: 0.5
       - AudioClip: {fileID: 8300000, guid: d841fd77f54b8c64889c633c3180219a, type: 3}
-        Volume: 0.4
+        Volume: 0.5
       - AudioClip: {fileID: 8300000, guid: f821e45a5654f11469425b4b67e5f2ce, type: 3}
         Volume: 0.4
       HasPitchVariation: 0
@@ -161,36 +161,36 @@ MonoBehaviour:
     - Name: hp_menu_push_baby
       Clips:
       - AudioClip: {fileID: 8300000, guid: d462855f31ab99e4fb365f241075bdbc, type: 3}
-        Volume: 0.5
+        Volume: 0.6
       - AudioClip: {fileID: 8300000, guid: b5d1f78d5fe0c0f4ba91420baeee4cf2, type: 3}
-        Volume: 0.5
+        Volume: 0.6
       - AudioClip: {fileID: 8300000, guid: 8f7a005e2f099df4c8dda22fd439dc85, type: 3}
-        Volume: 0.5
+        Volume: 0.6
       - AudioClip: {fileID: 8300000, guid: ad2e9028dd0e4864b9475dbf36642f63, type: 3}
-        Volume: 0.5
+        Volume: 0.6
       - AudioClip: {fileID: 8300000, guid: 672c64e08da85ba4a878a0a3187fbc9e, type: 3}
-        Volume: 0.5
+        Volume: 0.6
       - AudioClip: {fileID: 8300000, guid: 8b91b18e01f180643ae35bbae454674e, type: 3}
-        Volume: 0.5
+        Volume: 0.6
       - AudioClip: {fileID: 8300000, guid: 3778cc25057e62b41838f3f075214c75, type: 3}
-        Volume: 0.5
+        Volume: 0.6
       - AudioClip: {fileID: 8300000, guid: 39a1148b0e59d13468dafaff6e45861b, type: 3}
-        Volume: 0.5
+        Volume: 0.6
       HasPitchVariation: 0
       PitchVariation: 0
       Enum: 15
     - Name: hp_baby
       Clips:
       - AudioClip: {fileID: 8300000, guid: e80a54494dd65e6418968909b71174a2, type: 3}
-        Volume: 0.6
+        Volume: 0.7
       - AudioClip: {fileID: 8300000, guid: d240a237ea05f0f4dab17855056ef8b7, type: 3}
-        Volume: 0.6
+        Volume: 0.75
       - AudioClip: {fileID: 8300000, guid: 51695a3d91714194c88d3d8e867af8b8, type: 3}
         Volume: 0.6
       - AudioClip: {fileID: 8300000, guid: 4863db4cfa4df1d4b9bc75d11f4ab98d, type: 3}
-        Volume: 0.6
+        Volume: 0.7
       - AudioClip: {fileID: 8300000, guid: 96446990b00e5504c9af8ff5281655c0, type: 3}
-        Volume: 0.6
+        Volume: 0.65
       HasPitchVariation: 0
       PitchVariation: 0
       Enum: 16

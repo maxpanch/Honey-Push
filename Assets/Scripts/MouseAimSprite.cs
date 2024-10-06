@@ -6,7 +6,7 @@ public class MouseAimSprite : MonoBehaviour
 {
     private void Start()
     {
-        Cursor.visible = false;
+        Cursor.visible = true;
     }
     private void Update()
     {
