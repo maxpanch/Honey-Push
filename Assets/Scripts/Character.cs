@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,9 +12,12 @@ public class Character : MonoBehaviour
     public Rigidbody Rigidbody;
     public float Health = 10;
     public Animator Animator;
+    public TMP_Text HealthUI;
     void Update()
     {
         if (GameManager.Instance.GameState == State.Intro || GameManager.Instance.GameState == State.Tutorial || GameManager.Instance.GameState == State.Lose || GameManager.Instance.GameState == State.Win || GameManager.Instance.GameState == State.Menu) return;
+        HealthUI.gameObject.SetActive(true);
+        HealthUI.text = Health + " <3";
         HorizontalMovement = Input.GetAxisRaw("Horizontal");
         VerticalMovement = Input.GetAxisRaw("Vertical");
         if (HorizontalMovement != 0 || VerticalMovement != 0) Animator.SetBool("IsWalking", true);
@@ -26,6 +30,7 @@ public class Character : MonoBehaviour
     public void Hit()
     {
         Health -= 1;
+        AudioManager.Instance.Play(SoundEnum.hp_king_hit);
         if (Health <= 0f) GameManager.Instance.SetState(State.Lose);
     }
     private void OnTriggerEnter(Collider other)

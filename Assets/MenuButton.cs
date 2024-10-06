@@ -10,6 +10,7 @@ public class MenuButton : MonoBehaviour
     public void PushButton()
     {
         Slider.value += 1;
+        AudioManager.Instance.Play(SoundEnum.hp_menu_push_baby);
         if (Slider.value == 10)
         {
             GetComponent<Button>().interactable = false;

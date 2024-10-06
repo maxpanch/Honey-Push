@@ -31,11 +31,12 @@ public class Queen : MonoBehaviour
         ShootCooldown -= Time.deltaTime;
         if (ShootCooldown <= 0)
         {
-            if (Input.GetMouseButton(0)) Power += Time.deltaTime / 4;
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space)) Power += Time.deltaTime / 4;
+            if (Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space))
             {
                 Animator.SetTrigger("Shoot");
                 GameObject bullet = Instantiate(Heir, SpawnPoint.position, quaternion.identity);
+                AudioManager.Instance.Play(SoundEnum.hp_baby);
 
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position, 40f, EnemyLayerMask);
                 float closestEnemyDistance = 999f;

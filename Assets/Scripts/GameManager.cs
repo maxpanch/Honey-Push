@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +30,10 @@ public class GameManager : MonoBehaviour
     public GameObject Bubble;
     public CanvasGroup CanvasGroup;
     public GameObject Title;
+    public GameObject TutorialUI;
+    public GameObject TutorialButtonUI;
+    public TMP_Text WinLoseUIText;
+    public GameObject RetryUI;
     private void Awake()
     {
         if (Instance != null) Destroy(this);
@@ -36,10 +41,25 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        SetState(State.Menu);
+        AudioManager.Instance.Play(SoundEnum.hp_amb_tone, 1, true);
+        if (Data.IsTutorialPlayed) SetState(State.Game);
+        else
+        {
+            AudioManager.Instance.Play(SoundEnum.GamejamSoulsHoneyPushMenu);
+            SetState(State.Menu);
+        }
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushGame, 1);
+            AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushLose, 1);
+            AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushWin, 1);
+            AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushMenu, 1);
+            AudioManager.Instance.Stop(SoundEnum.hp_amb_tone, 1);
+            SceneManager.LoadSceneAsync(0);
+        }
         if (GameState == State.Intro || GameState == State.Tutorial || GameState == State.Lose || GameState == State.Win || GameState == State.Menu) return;
 
         Timer -= Time.deltaTime;
@@ -71,6 +91,7 @@ public class GameManager : MonoBehaviour
         GameState = state;
         if (GameState == State.Intro)
         {
+            Title.SetActive(true);
             MouseAimSprite.SetActive(false);
             CanvasGroup.alpha = 0f;
             Bubble.SetActive(true);
@@ -80,69 +101,90 @@ public class GameManager : MonoBehaviour
         if (GameState == State.Tutorial) ShowTutorial();
         if (GameState == State.Game)
         {
+            TutorialButtonUI.SetActive(false);
+            TutorialUI.SetActive(false);
             Bubble.SetActive(false);
             IntroUI.enabled = false;
             TimerUI.SetActive(true);
+            RetryUI.SetActive(true);
             MouseAimSprite.SetActive(true);
             CanvasGroup.alpha = 1f;
+            AudioManager.Instance.Play(SoundEnum.GamejamSoulsHoneyPushGame, 1);
             StartCoroutine(WaveSpawnRoutine());
         }
         if (GameState == State.Lose)
         {
+            StopCoroutine(WaveSpawnRoutine());
+            AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushGame, 1);
+            AudioManager.Instance.Play(SoundEnum.GamejamSoulsHoneyPushLose);
             MouseAimSprite.SetActive(false);
-            Debug.Log("Lose");
+            WinLoseUIText.enabled = true;
+            WinLoseUIText.text = "NOOOOO, MY LIFE ;C";
         }
         if (GameState == State.Win)
         {
+            StopCoroutine(WaveSpawnRoutine());
+            AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushGame, 1);
+            AudioManager.Instance.Play(SoundEnum.GamejamSoulsHoneyPushWin);
             MouseAimSprite.SetActive(false);
-            Debug.Log("Lose");
+            WinLoseUIText.enabled = true;
+            WinLoseUIText.text = "MY LIFE IS IN MY HANDS! MY WIFE'S TOO!";
         }
     }
     public void ShowIntro()
     {
+        AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushMenu, 3f);
         StartCoroutine(IntroRoutine());
     }
     private IEnumerator IntroRoutine()
     {
-        float dialogueLength = 2f;
+        float dialogueLength = 3.5f;
         float dialoguePause = 0.6f;
         yield return new WaitForSeconds(dialogueLength / 4);
         Bubble.SetActive(true);
         StartCoroutine(FadeRoutine(0.5f));
         IntroUI.text = "WE'RE GETTING RAIDED!";
-        yield return new WaitForSeconds(dialogueLength * 1.5f);
+        AudioManager.Instance.Play(SoundEnum.hp_dialogue_1);
+        yield return new WaitForSeconds(dialogueLength * 1.2f);
         IntroUI.text = "";
         yield return new WaitForSeconds(dialoguePause);
         IntroUI.text = "THIS RAIDERS ARE MERCILESS AND VIOLENT!";
+        AudioManager.Instance.Play(SoundEnum.hp_dialogue_2);
         yield return new WaitForSeconds(dialogueLength);
         IntroUI.text = "";
         yield return new WaitForSeconds(dialoguePause);
         IntroUI.text = "BUT I... I WANT TO LIVE MY LIFE!";
+        AudioManager.Instance.Play(SoundEnum.hp_dialogue_3);
         yield return new WaitForSeconds(dialogueLength);
         IntroUI.text = "";
         yield return new WaitForSeconds(dialoguePause);
-        IntroUI.text = "SO, MY QUEEN, WE DOING IT!";
+        IntroUI.text = "SO, MY QUEEN, WE'RE DOIN IT!";
+        AudioManager.Instance.Play(SoundEnum.hp_dialogue_4);
         yield return new WaitForSeconds(dialogueLength);
         IntroUI.text = "";
 
-        float queenMoveSeconds = 2f;
+        AudioManager.Instance.Play(SoundEnum.hp_queen_heels);
+        float queenMoveSeconds = 3f;
         while (queenMoveSeconds > 0)
         {
             queenMoveSeconds -= Time.deltaTime;
             QueenSprite.transform.position = Vector3.MoveTowards(QueenSprite.transform.position, King.transform.position + new Vector3(0.6f, 0, 0), 1f * Time.deltaTime);
             yield return null;
         }
+        AudioManager.Instance.Stop(SoundEnum.hp_queen_heels, 1f);
+        AudioManager.Instance.Play(SoundEnum.hp_king_take_queen);
         QueenSprite.SetActive(false);
         Queen.SetActive(true);
-        yield return new WaitForSeconds(dialoguePause);
+        yield return new WaitForSeconds(dialoguePause * 2);
         IntroUI.text = "HONEY, YOU NEED TO PUSH!";
-        yield return new WaitForSeconds(dialogueLength * 2);
+        AudioManager.Instance.Play(SoundEnum.hp_dialogue_5);
+        yield return new WaitForSeconds(dialogueLength * 1.3f);
         StartCoroutine(FadeRoutine(-0.5f));
         IntroUI.text = "";
+        yield return new WaitForSeconds(dialogueLength);
         Bubble.SetActive(false);
         Title.SetActive(false);
-        yield return new WaitForSeconds(dialoguePause);
-        SetState(State.Game);
+        SetState(State.Tutorial);
     }
     private IEnumerator FadeRoutine(float value)
     {
@@ -157,7 +199,8 @@ public class GameManager : MonoBehaviour
     }
     public void ShowTutorial()
     {
-
+        TutorialUI.SetActive(true);
+        TutorialButtonUI.SetActive(true);
     }
 }
 public enum State

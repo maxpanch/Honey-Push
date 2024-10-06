@@ -18,10 +18,28 @@ public class Heir : MonoBehaviour
     public bool IsAttacking = false;
     public Sprite HeirEnemy;
     public LayerMask EnemyLayerMask;
+    public AudioSource FootstepAudioSource;
+    public AudioSource DeathAudioSource;
+    public AudioSource SwordAudioSource;
+    public float FootstepCooldown = 0.5f;
+    public float FootstepCooldownBase;
+    private void Start()
+    {
+        FootstepCooldownBase = FootstepCooldown;
+    }
     private void Update()
     {
         if (!IsDead && !IsAttacking)
         {
+            if (GameManager.Instance.GameState == State.Intro || GameManager.Instance.GameState == State.Tutorial || GameManager.Instance.GameState == State.Lose || GameManager.Instance.GameState == State.Win || GameManager.Instance.GameState == State.Menu) return;
+
+            FootstepCooldown -= Time.deltaTime;
+            if (FootstepCooldown < 0)
+            {
+                FootstepCooldown = FootstepCooldownBase;
+                if (Random.Range(0, 10) > 6) AudioManager.Instance.Play(SoundEnum.hp_footstep, FootstepAudioSource);
+            }
+
             if (Destination == null) FindEnemy();
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
             Vector3 direction = (Destination.position - transform.position).normalized;
@@ -42,6 +60,7 @@ public class Heir : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, Destination.position, Speed * Time.deltaTime);
             // Debug.Log(Vector3.Distance(transform.position, Destination));
         }
+        if (GameManager.Instance.GameState == State.Win && IsGrown) Death();
     }
     public void FindEnemy()
     {
@@ -93,6 +112,7 @@ public class Heir : MonoBehaviour
         {
             if (!IsMovingRight) HeirSwordAnimator.SetTrigger("AttackLeft");
             else HeirSwordAnimator.SetTrigger("AttackRight");
+            AudioManager.Instance.Play(SoundEnum.hp_sword, SwordAudioSource);
             other.gameObject.GetComponent<Viking>().Death();
             StartCoroutine(AttackRoutine());
             AddKilledEnemy();
@@ -103,6 +123,7 @@ public class Heir : MonoBehaviour
             {
                 if (!IsMovingRight) HeirSwordAnimator.SetTrigger("AttackLeft");
                 else HeirSwordAnimator.SetTrigger("AttackRight");
+                AudioManager.Instance.Play(SoundEnum.hp_sword, SwordAudioSource);
                 other.gameObject.GetComponent<Heir>().Death();
                 StartCoroutine(AttackRoutine());
                 AddKilledEnemy();
@@ -112,6 +133,7 @@ public class Heir : MonoBehaviour
         {
             if (!IsMovingRight) HeirSwordAnimator.SetTrigger("AttackLeft");
             else HeirSwordAnimator.SetTrigger("AttackRight");
+            AudioManager.Instance.Play(SoundEnum.hp_sword, SwordAudioSource);
             other.gameObject.GetComponent<Character>().Hit();
             StartCoroutine(AttackRoutine());
             Death();
@@ -125,7 +147,13 @@ public class Heir : MonoBehaviour
     }
     public void Death()
     {
-        Destroy(gameObject, 1.25f);
+        StartCoroutine(DeathRoutine());
+    }
+    private IEnumerator DeathRoutine()
+    {
         BoxCollider.enabled = false;
+        DeathAudioSource.Play();
+        yield return new WaitForSeconds(1f);
+        Destroy(gameObject);
     }
 }
