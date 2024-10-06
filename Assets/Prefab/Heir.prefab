@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 5813461896672536492}
   - component: {fileID: 6861899877585677969}
   - component: {fileID: 1095453558631566111}
-  m_Layer: 6
+  - component: {fileID: 2678967077169106845}
+  m_Layer: 7
   m_Name: Heir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   KilledEnemies: 4
   IsGrown: 0
-  Destination: {x: 0, y: 0, z: 0}
+  Destination: {fileID: 0}
   Speed: 0.7
   SpriteRenderer: {fileID: 5830305871478188531}
   Rigidbody: {fileID: 1095453558631566111}
@@ -113,6 +114,9 @@ MonoBehaviour:
   Sword: {fileID: 6902908694681043867}
   IsAttacking: 0
   HeirEnemy: {fileID: 21300000, guid: 1f98dede923f8514fa814630238de0fd, type: 3}
+  EnemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!65 &6861899877585677969
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -128,7 +132,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -161,6 +165,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!95 &2678967077169106845
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3401187548944699141}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6a85b8376925bd049b7592f06dc5450c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6902908694681043867
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,7 +197,7 @@ GameObject:
   - component: {fileID: 7295638651962921656}
   - component: {fileID: 925684610275364004}
   - component: {fileID: 3028494789187670877}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HEIR_SWORD
   m_TagString: Untagged
   m_Icon: {fileID: 0}

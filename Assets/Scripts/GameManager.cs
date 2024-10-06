@@ -30,11 +30,11 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        SetState(State.Game);
+        SetState(State.Menu);
     }
     private void Update()
     {
-        if (GameState == State.Intro || GameState == State.Tutorial || GameState == State.Lose || GameState == State.Win) return;
+        if (GameState == State.Intro || GameState == State.Tutorial || GameState == State.Lose || GameState == State.Win || GameState == State.Menu) return;
 
         Timer -= Time.deltaTime;
         TimerUI.GetComponent<TMP_Text>().text = Mathf.Ceil(Timer) + "";
@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour
 }
 public enum State
 {
+    Menu,
     Intro,
     Tutorial,
     Game,

@@ -28,7 +28,7 @@ public class Character : MonoBehaviour
         Health -= 1;
         if (Health <= 0f) GameManager.Instance.SetState(State.Lose);
     }
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Viking>())
         {

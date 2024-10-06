@@ -13,6 +13,7 @@ public class Queen : MonoBehaviour
     public float ShootCooldown = 0.5f;
     private float ShootCooldownBase;
     public Animator Animator;
+    public LayerMask EnemyLayerMask;
     private void Start()
     {
         PowerBase = Power;
@@ -20,7 +21,7 @@ public class Queen : MonoBehaviour
     }
     void Update()
     {
-        if (GameManager.Instance.GameState == State.Intro || GameManager.Instance.GameState == State.Tutorial || GameManager.Instance.GameState == State.Lose || GameManager.Instance.GameState == State.Win) return;
+        if (GameManager.Instance.GameState == State.Intro || GameManager.Instance.GameState == State.Tutorial || GameManager.Instance.GameState == State.Lose || GameManager.Instance.GameState == State.Win || GameManager.Instance.GameState == State.Menu) return;
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         Vector3 aimDirection = (mousePosition - transform.position).normalized;
@@ -35,10 +36,23 @@ public class Queen : MonoBehaviour
             {
                 Animator.SetTrigger("Shoot");
                 GameObject bullet = Instantiate(Heir, SpawnPoint.position, quaternion.identity);
-                bullet.GetComponent<Heir>().Destination = Aim.transform.position;
+
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position, 40f, EnemyLayerMask);
+                float closestEnemyDistance = 999f;
+                foreach (var hitCollider in hitColliders)
+                {
+                    // Debug.Log(hitCollider.gameObject.name + " - " + Vector3.Distance(transform.position, hitCollider.transform.position) + ", closest is " + closestEnemyDistance);
+                    if (Vector3.Distance(transform.position, hitCollider.transform.position) < closestEnemyDistance)
+                    {
+                        bullet.GetComponent<Heir>().Destination = hitCollider.transform;
+                        closestEnemyDistance = Vector3.Distance(transform.position, hitCollider.transform.position);
+                    }
+                }
+                if (bullet.GetComponent<Heir>().Destination == null) bullet.GetComponent<Heir>().Destination = GameManager.Instance.King;
+                // Debug.Log(bullet.GetComponent<Heir>().Destination);
                 bullet.transform.parent = GameManager.Instance.SortingGroup;
                 // Debug.Log(Aim.transform.position);
-                bullet.GetComponent<Heir>().Rigidbody.AddForce(bullet.GetComponent<Heir>().Destination * Power, ForceMode.Impulse);
+                bullet.GetComponent<Heir>().Rigidbody.AddForce(bullet.GetComponent<Heir>().Destination.position * Power, ForceMode.Impulse);
                 Power = PowerBase;
                 ShootCooldown = ShootCooldownBase;
             }

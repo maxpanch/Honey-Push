@@ -6,7 +6,7 @@ public class Heir : MonoBehaviour
 {
     public int KilledEnemies = 4;
     public bool IsGrown = false;
-    public Vector3 Destination;
+    public Transform Destination;
     public float Speed;
     public SpriteRenderer SpriteRenderer;
     public Rigidbody Rigidbody;
@@ -17,12 +17,14 @@ public class Heir : MonoBehaviour
     public GameObject Sword;
     public bool IsAttacking = false;
     public Sprite HeirEnemy;
+    public LayerMask EnemyLayerMask;
     private void Update()
     {
         if (!IsDead && !IsAttacking)
         {
+            if (Destination == null) FindEnemy();
             transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-            Vector3 direction = (Destination - transform.position).normalized;
+            Vector3 direction = (Destination.position - transform.position).normalized;
             if (direction.x >= 0) IsMovingRight = true;
             else IsMovingRight = false;
             if (IsMovingRight)
@@ -36,22 +38,25 @@ public class Heir : MonoBehaviour
                 Sword.GetComponent<SpriteRenderer>().flipX = false;
             }
 
-            if (IsGrown) Destination = GameManager.Instance.King.position;
-            transform.position = Vector3.MoveTowards(transform.position, Destination, Speed * Time.deltaTime);
+            if (IsGrown) Destination = GameManager.Instance.King;
+            transform.position = Vector3.MoveTowards(transform.position, Destination.position, Speed * Time.deltaTime);
             // Debug.Log(Vector3.Distance(transform.position, Destination));
-            if (Vector3.Distance(transform.position, Destination) < 0.5f && !IsGrown) FindEnemy();
         }
     }
     public void FindEnemy()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 15f);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 40f, EnemyLayerMask);
         float closestEnemyDistance = 999f;
         foreach (var hitCollider in hitColliders)
         {
-            // Debug.Log(hitCollider.gameObject.name);
-            if (Vector3.Distance(transform.position, hitCollider.transform.position) < closestEnemyDistance) Destination = hitCollider.transform.position;
+            // Debug.Log(hitCollider.gameObject.name + " - " + Vector3.Distance(transform.position, hitCollider.transform.position) + ", closest is " + closestEnemyDistance);
+            if (Vector3.Distance(transform.position, hitCollider.transform.position) < closestEnemyDistance)
+            {
+                Destination = hitCollider.transform;
+                closestEnemyDistance = Vector3.Distance(transform.position, hitCollider.transform.position);
+            }
         }
-        if (Destination == null) Destination = GameManager.Instance.King.position;
+        if (Destination == null) Destination.position = GameManager.Instance.King.position;
     }
     public void AddKilledEnemy()
     {
@@ -61,6 +66,7 @@ public class Heir : MonoBehaviour
             IsGrown = true;
             // GameManager.Instance.Enemies.Add(gameObject);
             SpriteRenderer.sprite = HeirEnemy;
+            gameObject.layer = LayerMask.NameToLayer("Enemy");
         }
         else
         {
@@ -78,9 +84,10 @@ public class Heir : MonoBehaviour
             timeForScale -= Time.deltaTime;
             yield return null;
         }
+        FindEnemy();
         yield return null;
     }
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Viking>() && !IsGrown)
         {
