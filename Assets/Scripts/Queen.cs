@@ -14,6 +14,7 @@ public class Queen : MonoBehaviour
     private float ShootCooldownBase;
     public Animator Animator;
     public LayerMask EnemyLayerMask;
+    public SpriteRenderer QueenSprite;
     private void Start()
     {
         PowerBase = Power;
@@ -36,6 +37,10 @@ public class Queen : MonoBehaviour
             {
                 Animator.SetTrigger("Shoot");
                 GameObject bullet = Instantiate(Heir, SpawnPoint.position, quaternion.identity);
+                Color color = QueenSprite.color;
+                color.a = 0.2f;
+                QueenSprite.color = color;
+                StartCoroutine(ReturnColorAlpha(ShootCooldownBase));
                 AudioManager.Instance.Play(SoundEnum.hp_baby);
 
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position, 40f, EnemyLayerMask);
@@ -58,5 +63,17 @@ public class Queen : MonoBehaviour
                 ShootCooldown = ShootCooldownBase;
             }
         }
+    }
+    private IEnumerator ReturnColorAlpha(float cooldown)
+    {
+        while (cooldown > 0)
+        {
+            cooldown -= Time.deltaTime;
+            Color color = QueenSprite.color;
+            color.a += 0.25f * Time.deltaTime;
+            QueenSprite.color = color;
+            yield return null;
+        }
+        yield return null;
     }
 }

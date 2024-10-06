@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -34,6 +35,9 @@ public class GameManager : MonoBehaviour
     public GameObject TutorialButtonUI;
     public TMP_Text WinLoseUIText;
     public GameObject RetryUI;
+    public GameObject Slider;
+    public GameObject Button;
+    public GameObject HelpTutorial;
     private void Awake()
     {
         if (Instance != null) Destroy(this);
@@ -42,12 +46,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         AudioManager.Instance.Play(SoundEnum.hp_amb_tone, 1, true);
-        if (Data.IsTutorialPlayed) SetState(State.Game);
-        else
-        {
-            AudioManager.Instance.Play(SoundEnum.GamejamSoulsHoneyPushMenu);
-            SetState(State.Menu);
-        }
+        AudioManager.Instance.Play(SoundEnum.GamejamSoulsHoneyPushMenu);
+        SetState(State.Menu);
     }
     private void Update()
     {
@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
             TimerUI.SetActive(true);
             RetryUI.SetActive(true);
             MouseAimSprite.SetActive(true);
+            HelpTutorial.SetActive(true);
             CanvasGroup.alpha = 1f;
             AudioManager.Instance.Play(SoundEnum.GamejamSoulsHoneyPushGame, 1);
             StartCoroutine(WaveSpawnRoutine());

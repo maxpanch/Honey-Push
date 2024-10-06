@@ -7,6 +7,5 @@ public class TutorialButton : MonoBehaviour
     public void TutorialEnd()
     {
         GameManager.Instance.SetState(State.Game);
-        Data.IsTutorialPlayed = true;
     }
 }
