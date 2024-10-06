@@ -13,7 +13,7 @@ public class Character : MonoBehaviour
     public Animator Animator;
     void Update()
     {
-        if (GameManager.Instance.GameState == State.Intro || GameManager.Instance.GameState == State.Tutorial || GameManager.Instance.GameState == State.Lose || GameManager.Instance.GameState == State.Win) return;
+        if (GameManager.Instance.GameState == State.Intro || GameManager.Instance.GameState == State.Tutorial || GameManager.Instance.GameState == State.Lose || GameManager.Instance.GameState == State.Win || GameManager.Instance.GameState == State.Menu) return;
         HorizontalMovement = Input.GetAxisRaw("Horizontal");
         VerticalMovement = Input.GetAxisRaw("Vertical");
         if (HorizontalMovement != 0 || VerticalMovement != 0) Animator.SetBool("IsWalking", true);

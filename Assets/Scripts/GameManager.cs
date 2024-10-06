@@ -23,6 +23,11 @@ public class GameManager : MonoBehaviour
     public float WavePauseBetweenWaves = 5f;
     public Transform[] VikingSpawnPoints;
     public Transform SortingGroup;
+    [Header("Intro Cutscene")]
+    public GameObject Queen;
+    public GameObject QueenSprite;
+    public GameObject Bubble;
+    public CanvasGroup CanvasGroup;
     private void Awake()
     {
         if (Instance != null) Destroy(this);
@@ -66,13 +71,19 @@ public class GameManager : MonoBehaviour
         if (GameState == State.Intro)
         {
             MouseAimSprite.SetActive(false);
+            CanvasGroup.alpha = 0f;
+            Bubble.SetActive(true);
+            IntroUI.enabled = true;
             ShowIntro();
         }
         if (GameState == State.Tutorial) ShowTutorial();
         if (GameState == State.Game)
         {
+            Bubble.SetActive(false);
+            IntroUI.enabled = false;
             TimerUI.SetActive(true);
             MouseAimSprite.SetActive(true);
+            CanvasGroup.alpha = 1f;
             StartCoroutine(WaveSpawnRoutine());
         }
         if (GameState == State.Lose)
@@ -94,27 +105,53 @@ public class GameManager : MonoBehaviour
     {
         float dialogueLength = 2f;
         float dialoguePause = 0.6f;
+        yield return new WaitForSeconds(dialogueLength / 4);
+        Bubble.SetActive(true);
+        StartCoroutine(FadeRoutine(0.5f));
         IntroUI.text = "WE'RE GETTING RAIDED!";
-        yield return new WaitForSeconds(dialogueLength);
+        yield return new WaitForSeconds(dialogueLength * 1.5f);
         IntroUI.text = "";
         yield return new WaitForSeconds(dialoguePause);
         IntroUI.text = "THIS RAIDERS ARE MERCILESS AND VIOLENT!";
         yield return new WaitForSeconds(dialogueLength);
         IntroUI.text = "";
         yield return new WaitForSeconds(dialoguePause);
-        IntroUI.text = "BUT I... I WANT TO LIVE ALL OF MY LIFE!";
+        IntroUI.text = "BUT I... I WANT TO LIVE MY LIFE!";
         yield return new WaitForSeconds(dialogueLength);
         IntroUI.text = "";
         yield return new WaitForSeconds(dialoguePause);
-        IntroUI.text = "SO, MY QUEEN, WE GOING TO DO IT!";
+        IntroUI.text = "SO, MY QUEEN, WE DOING IT!";
         yield return new WaitForSeconds(dialogueLength);
         IntroUI.text = "";
+
+        float queenMoveSeconds = 2f;
+        while (queenMoveSeconds > 0)
+        {
+            queenMoveSeconds -= Time.deltaTime;
+            QueenSprite.transform.position = Vector3.MoveTowards(QueenSprite.transform.position, King.transform.position + new Vector3(0.6f, 0, 0), 1f * Time.deltaTime);
+            yield return null;
+        }
+        QueenSprite.SetActive(false);
+        Queen.SetActive(true);
         yield return new WaitForSeconds(dialoguePause);
-        IntroUI.text = "HONEY, PUSH! PUSH! PUSH!";
+        IntroUI.text = "HONEY, YOU NEED TO PUSH!";
         yield return new WaitForSeconds(dialogueLength * 2);
+        StartCoroutine(FadeRoutine(-0.5f));
         IntroUI.text = "";
+        Bubble.SetActive(false);
         yield return new WaitForSeconds(dialoguePause);
         SetState(State.Game);
+    }
+    private IEnumerator FadeRoutine(float value)
+    {
+        yield return new WaitForSeconds(0.1f);
+        float fadeSeconds = 2f;
+        while (fadeSeconds > 0)
+        {
+            fadeSeconds -= Time.deltaTime;
+            CanvasGroup.alpha += value * Time.deltaTime;
+            yield return null;
+        }
     }
     public void ShowTutorial()
     {

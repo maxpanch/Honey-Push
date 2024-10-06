@@ -11,14 +11,24 @@ public class MenuButton : MonoBehaviour
     public void PushButton()
     {
         Slider.value += 1;
-        CanvasGroup.alpha -= 0.1f;
         if (Slider.value == 10)
         {
-            GameManager.Instance.SetState(State.Intro);
-            Title.SetActive(false);
-            Slider.gameObject.SetActive(false);
-            gameObject.SetActive(false);
-            CanvasGroup.alpha = 1f;
+            StartCoroutine(MenuFadeRoutine());
         }
+    }
+    private IEnumerator MenuFadeRoutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        float fadeSeconds = 2f;
+        while (fadeSeconds > 0)
+        {
+            fadeSeconds -= Time.deltaTime;
+            CanvasGroup.alpha -= 0.5f * Time.deltaTime;
+            yield return null;
+        }
+        GameManager.Instance.SetState(State.Intro);
+        Title.SetActive(false);
+        Slider.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
