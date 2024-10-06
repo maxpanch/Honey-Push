@@ -7,12 +7,12 @@ public class MenuButton : MonoBehaviour
 {
     public Slider Slider;
     public CanvasGroup CanvasGroup;
-    public GameObject Title;
     public void PushButton()
     {
         Slider.value += 1;
         if (Slider.value == 10)
         {
+            GetComponent<Button>().interactable = false;
             StartCoroutine(MenuFadeRoutine());
         }
     }
@@ -27,7 +27,6 @@ public class MenuButton : MonoBehaviour
             yield return null;
         }
         GameManager.Instance.SetState(State.Intro);
-        Title.SetActive(false);
         Slider.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }

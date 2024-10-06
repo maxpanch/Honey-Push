@@ -932,7 +932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.7921569}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1024,7 +1024,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4283124555
-  m_fontColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
+  m_fontColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1041,8 +1041,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1507,7 +1507,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Slider: {fileID: 1096439100}
   CanvasGroup: {fileID: 120380394}
-  Title: {fileID: 1197591101}
 --- !u!114 &1156335446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2250,6 +2249,7 @@ MonoBehaviour:
   QueenSprite: {fileID: 2042371054}
   Bubble: {fileID: 814444756}
   CanvasGroup: {fileID: 120380394}
+  Title: {fileID: 0}
 --- !u!4 &1960729756
 Transform:
   m_ObjectHideFlags: 0

@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public GameObject QueenSprite;
     public GameObject Bubble;
     public CanvasGroup CanvasGroup;
+    public GameObject Title;
     private void Awake()
     {
         if (Instance != null) Destroy(this);
@@ -139,6 +140,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(FadeRoutine(-0.5f));
         IntroUI.text = "";
         Bubble.SetActive(false);
+        Title.SetActive(false);
         yield return new WaitForSeconds(dialoguePause);
         SetState(State.Game);
     }
