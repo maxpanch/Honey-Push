@@ -10,9 +10,10 @@ public class Character : MonoBehaviour
     public float HorizontalMovement;
     public float VerticalMovement;
     public Rigidbody Rigidbody;
-    public float Health = 10;
+    public int Health = 10;
     public Animator Animator;
     public TMP_Text HealthUI;
+    public CapsuleCollider CapsuleCollider;
     void Update()
     {
         if (GameManager.Instance.GameState == State.Intro || GameManager.Instance.GameState == State.Tutorial || GameManager.Instance.GameState == State.Lose || GameManager.Instance.GameState == State.Win || GameManager.Instance.GameState == State.Menu) return;
@@ -31,11 +32,16 @@ public class Character : MonoBehaviour
     {
         Health -= 1;
         AudioManager.Instance.Play(SoundEnum.hp_king_hit);
-        if (Health <= 0f) GameManager.Instance.SetState(State.Lose);
+        if (Health <= 0f)
+        {
+            CapsuleCollider.enabled = false;
+            Health = 0;
+            GameManager.Instance.SetState(State.Lose);
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<Viking>())
+        if (other.gameObject.GetComponent<Viking>() && (GameManager.Instance.GameState != State.Lose || GameManager.Instance.GameState != State.Win))
         {
             other.gameObject.GetComponent<Viking>().Death();
             Hit();

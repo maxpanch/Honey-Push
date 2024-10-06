@@ -30,6 +30,7 @@ public class Viking : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
         transform.position = Vector3.MoveTowards(transform.position, Destination.position, Speed * Time.deltaTime);
         if (GameManager.Instance.GameState == State.Win) Death();
+        if (GameManager.Instance.GameState == State.Lose) BoxCollider.enabled = false;
     }
     public void Death()
     {

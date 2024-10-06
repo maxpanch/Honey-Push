@@ -19,6 +19,7 @@ public class Queen : MonoBehaviour
     {
         PowerBase = Power;
         ShootCooldownBase = ShootCooldown;
+        ShootCooldown = 1;
     }
     void Update()
     {

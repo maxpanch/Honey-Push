@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
             TimerUI.SetActive(true);
             RetryUI.SetActive(true);
             MouseAimSprite.SetActive(true);
-            HelpTutorial.SetActive(true);
+            // HelpTutorial.SetActive(true);
             CanvasGroup.alpha = 1f;
             AudioManager.Instance.Play(SoundEnum.GamejamSoulsHoneyPushGame, 1);
             StartCoroutine(WaveSpawnRoutine());
@@ -119,8 +119,12 @@ public class GameManager : MonoBehaviour
             AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushGame, 1);
             AudioManager.Instance.Play(SoundEnum.GamejamSoulsHoneyPushLose);
             MouseAimSprite.SetActive(false);
+            WinLoseUIText.gameObject.SetActive(true);
             WinLoseUIText.enabled = true;
             WinLoseUIText.text = "NOOOOO, MY LIFE ;C";
+            King.GetComponent<Character>().HorizontalMovement = 0;
+            King.GetComponent<Character>().VerticalMovement = 0;
+            StartCoroutine(RestartWinGame(12));
         }
         if (GameState == State.Win)
         {
@@ -128,9 +132,24 @@ public class GameManager : MonoBehaviour
             AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushGame, 1);
             AudioManager.Instance.Play(SoundEnum.GamejamSoulsHoneyPushWin);
             MouseAimSprite.SetActive(false);
+            WinLoseUIText.gameObject.SetActive(true);
             WinLoseUIText.enabled = true;
             WinLoseUIText.text = "MY LIFE IS IN MY HANDS! MY WIFE'S TOO!";
+            King.GetComponent<Character>().HorizontalMovement = 0;
+            King.GetComponent<Character>().VerticalMovement = 0;
+            StartCoroutine(RestartWinGame(16));
         }
+    }
+    private IEnumerator RestartWinGame(float time)
+    {
+        yield return new WaitForSeconds(time);
+        AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushGame, 1);
+        AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushLose, 1);
+        AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushWin, 1);
+        AudioManager.Instance.Stop(SoundEnum.GamejamSoulsHoneyPushMenu, 1);
+        AudioManager.Instance.Stop(SoundEnum.hp_amb_tone, 1);
+        SceneManager.LoadSceneAsync(0);
+        yield return null;
     }
     public void ShowIntro()
     {
@@ -181,8 +200,8 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.Play(SoundEnum.hp_dialogue_5);
         yield return new WaitForSeconds(dialogueLength * 1.3f);
         StartCoroutine(FadeRoutine(-0.5f));
-        IntroUI.text = "";
         yield return new WaitForSeconds(dialogueLength);
+        IntroUI.text = "";
         Bubble.SetActive(false);
         Title.SetActive(false);
         SetState(State.Tutorial);

@@ -18,7 +18,7 @@ MonoBehaviour:
     - Name: GamejamSoulsHoneyPushGame
       Clips:
       - AudioClip: {fileID: 8300000, guid: 1412d1a47f74cf342a95ef37c7f0e06c, type: 3}
-        Volume: 0.6
+        Volume: 0.55
       HasPitchVariation: 0
       PitchVariation: 0
       Enum: 0
@@ -85,13 +85,13 @@ MonoBehaviour:
     - Name: hp_king_hit
       Clips:
       - AudioClip: {fileID: 8300000, guid: c0e03c7498e6cdf48a7c730ed3e24081, type: 3}
-        Volume: 1
+        Volume: 0.6
       - AudioClip: {fileID: 8300000, guid: a6924536b5cbe174bad4ab8845928882, type: 3}
-        Volume: 1
+        Volume: 0.55
       - AudioClip: {fileID: 8300000, guid: c27528fd23c8e464e9f9cfb2a00727be, type: 3}
-        Volume: 1
+        Volume: 0.55
       - AudioClip: {fileID: 8300000, guid: a340c5178a0f22d428b97f4dcf3bab0c, type: 3}
-        Volume: 1
+        Volume: 0.55
       HasPitchVariation: 0
       PitchVariation: 0
       Enum: 9
